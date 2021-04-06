@@ -1,0 +1,34 @@
+<?php
+if (empty($_POST['page'])) {  // When no page is sent from the client; The initial display
+                                // You may use if (!isset($_POST['page'])) instead of empty(...).
+    $display_modal_window = 'no-modal';  // This variable will be used in 'view_startpage.php'.
+                              // It will display the start page without any box, i.e., no LogIn box, no Join box, ...
+    include('startPage.php');
+    exit();
+}
+
+require('model.php');
+header('Content-Type: application/json');
+
+if ($_POST['page'] == 'StartPage')
+{
+      $command = $_POST['command'];
+	switch($command) {  
+    		case 'getAllProducts' :
+			echo toJson(getAllProducts());		
+		break;
+			
+		
+	}
+}
+
+
+function toJson($result){
+
+		 while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                        $myArray[] = $row;
+                 }
+                return json_encode($myArray);
+
+}
+?>
